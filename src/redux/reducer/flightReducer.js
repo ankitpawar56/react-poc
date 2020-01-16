@@ -14,7 +14,7 @@ const initialState = {
 const flightReducer = function(state = initialState, {type, data, payload}) {
     switch(type) {
         case BOOK_SUCCESS:
-            const isBooked =true
+            const isBooked = true
             return {
                 ...state,
                 isBooked,

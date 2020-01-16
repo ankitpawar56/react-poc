@@ -2,12 +2,12 @@ import React from 'react';
 import Card from '../Card/Card';
 import PropTypes from 'prop-types';
 
-export default function List({ myBookings }) {
+export default function List() {
     return (
         <div>
-            {myBookings && myBookings.map((item, index) => (
+            {/* {myBookings && myBookings.map((item, index) => (
                 <Card key = {index} item = {item} itemIndex = {index} />
-            ))}
+            ))} */}
         </div>
     );
 }

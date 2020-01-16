@@ -6,7 +6,8 @@ import {
 
 const initialState = {
     isLoggedIn: false,
-    isRegistered: false
+    isRegistered: false,
+    token : ''
 };
 
 const loginReducer = function(state = initialState, {type, data, payload}) {

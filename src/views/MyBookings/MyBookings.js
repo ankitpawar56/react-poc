@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getBookingsAPI } from '../../redux/actions';
-import List from '../../components/List/List';
+import List from '../../Components/List/List';
 import PropTypes from 'prop-types';
 
-class MyBookings extends Component() {
+class MyBookings extends Component {
     componentDidMount() {
         this.props.getBookingsAPI();
     }

@@ -16,7 +16,7 @@ async function handleAPICall(params) {
         credentials: "same-origin",
     }
 
-    if (params.method === "POST") {
+    if (params.TYPE === "POST") {
         apiObj.headers = {'Content-Type':'application/json', 'x-access-token': params.token ? params.token : undefined}
         apiObj.body = JSON.stringify(params.data);
     }
@@ -41,7 +41,7 @@ export function loginAPI(obj) {
             successAction: LOGIN_SUCCESS,
             failedAction: LOGIN_FAILURE,
             data: obj,
-            method: "POST"
+            TYPE: "POST"
         }
 
         handleAPICall(params);
@@ -56,14 +56,14 @@ export function registerAPI(obj) {
             successAction: REGISTER_SUCCESS,
             failedAction: LOGIN_FAILURE,
             data: obj,
-            method: "POST",
+            TYPE: "POST",
             token: user
         }
 
         handleAPICall(params);
     }
 }
-export function bookAPI(obj) {
+export function bookAPI(obj, token) {
     return dispatch => {
         const params = {
             dispatch,
@@ -71,7 +71,9 @@ export function bookAPI(obj) {
             successAction: BOOK_SUCCESS,
             failedAction: BOOK_FAILURE,
             data: obj,
-            method: "POST"
+            TYPE: "POST",
+            token: token
+
         }
 
         handleAPICall(params);
@@ -86,7 +88,7 @@ export function cancelAPI(obj, itemIndex) {
             successAction: CANCEL_BOOKING,
             failedAction: '',
             data: obj,
-            method: "POST",
+            TYPE: "POST",
             payload: itemIndex
         }
 
@@ -101,7 +103,7 @@ export function getBookingsAPI() {
             END_POINT: BASE_URL + "flights/getBookingsData",
             successAction: GET_BOOKINGS,
             failedAction: '',
-            method: "POST",
+            TYPE: "POST",
         }
 
         handleAPICall(params);

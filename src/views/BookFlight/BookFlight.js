@@ -11,27 +11,14 @@ class BookFlight extends Component {
         class : ''
     }
     componentDidUpdate() {
-        (this.props.isBooked) && this.props.history.push("/login");
+        (this.props.isBooked) && this.props.history.push("/myBookings");
     }
-    setTrip(event) {
-        console.log(event.target.value);
-        this.setState({
-            trip : event.target.value
-        }) 
-      }
-    setClass(event) {
-        this.setState({
-            class : event.target.value
-        })
-    }
+    
+   
     handleSubmit = (event) => {
         event.preventDefault();
-        if(!this.props.isLoggedIn) {
-            alert("Please Log in")
-        }
-        else {
-            const travelDate = event.target.depart.value;
-            const returnDate = event.target.return.value;
+            let travelDate = event.target.depart.value;
+            let returnDate = event.target.return.value;
             const fromPlace = event.target.fromPlace.value;
             const toPlace = event.target.toPlace.value;
             const adultsCount = event.target.adults.value;
@@ -39,23 +26,25 @@ class BookFlight extends Component {
             const infantsCount = event.target.infants.value;
             const tripType = this.state.trip;
             const travelClass = this.state.class
-            
-    
-            this.props.bookAPI({travelDate, returnDate, fromPlace, toPlace, adultsCount,childrenCount,infantsCount, tripType, travelClass}); 
-        }
-        const travelDate = event.target.depart.value;
-        const returnDate = event.target.return.value;
-        const fromPlace = event.target.fromPlace.value;
-        const toPlace = event.target.toPlace.value;
-        const adultsCount = event.target.adults.value;
-        const childrenCount = event.target.children.value;
-        const infantsCount = event.target.infants.value;
-        const tripType = this.state.trip;
-        const travelClass = this.state.class
-        
+            returnDate = new Date(returnDate).toISOString();
+            travelDate = new Date(travelDate).toISOString();
+            debugger
+            this.props.bookAPI({travelDate, returnDate, fromPlace, toPlace, adultsCount,childrenCount,infantsCount, tripType, travelClass}, this.props.token);    
 
-        this.props.bookAPI({travelDate, returnDate, fromPlace, toPlace, adultsCount,childrenCount,infantsCount, tripType, travelClass});
     }
+    
+    setTrip(event) {
+        console.log(event.target.value);
+        this.setState({
+            trip : event.target.value
+        }) 
+      }
+      setClass(event) {
+        console.log(event.target.value);
+        this.setState({
+            class : event.target.value
+        }) 
+      }
     render() {
         return(
             <form onSubmit = {this.handleSubmit}>
@@ -63,7 +52,7 @@ class BookFlight extends Component {
                 <div className="container"> 
                     <h2> Book Flight </h2>
                     <div onChange={this.setTrip.bind(this)}>
-                        <input type="radio" value="one-way" name="trip"/> One Way
+                        <input type="radio" value="one-way" defaultChecked name="trip"/> One Way
                         <input type="radio" value="round" name="trip"/> Round Trip
                     </div>
                         <input 
@@ -103,17 +92,18 @@ class BookFlight extends Component {
                         />
                         <label>
                             Travel Class:
-                            <select value={this.state.value} onChange={this.handleChange}>
+                            <select value={this.state.class} onChange={this.setClass.bind(this)}>
                                 <option value="economy">Economy</option>
                                 <option value="business">Business</option>
                                 <option value="first">First Class</option>
                             </select>
                         </label>
                         >
-                        <Link to="/result">
                             <button type = "submit" className="btn btn-primary" 
                             // disabled={!this.validateForm()}
                             >Book</button>
+                        <Link to="/myBookings">
+                                <button className="btn btn-primary"> My Bookings</button>
                         </Link>
                         
                 </div>
@@ -126,6 +116,8 @@ function mapStateToProps(state) {
     return {
         isBooked: state.flightReducer.isBooked,
         isLoggedIn: state.loginReducer.isLoggedIn,
+        token: state.loginReducer.token,
+
     };
 }
 

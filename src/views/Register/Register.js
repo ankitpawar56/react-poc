@@ -12,12 +12,7 @@ class RegisterComponent extends Component {
     state = {
         gender : ''
     }
-    setGender(event) {
-        console.log(event.target.value);
-        this.setState({
-            gender : event.target.value
-        }) 
-      }
+    
       handleSubmit = (event) => {
         event.preventDefault();
         const email = event.target.email.value;
@@ -30,6 +25,12 @@ class RegisterComponent extends Component {
 
         this.props.registerAPI({email, mobile, firstName, lastName, gender, password});
     }
+    setGender(event) {
+        console.log(event.target.value);
+        this.setState({
+            gender : event.target.value
+        }) 
+      }
     render() {
 
     return(
@@ -57,7 +58,7 @@ class RegisterComponent extends Component {
                         placeholder = "Last Name"
                     />
                     <div onChange={this.setGender.bind(this)}>
-                        <input type="radio" value="Male" name="gender"/> Male
+                        <input type="radio" value="Male" defaultChecked  name="gender"/> Male
                         <input type="radio" value="Female" name="gender"/> Female
                     </div>
                     <input 
@@ -73,9 +74,6 @@ class RegisterComponent extends Component {
                     <button className="btn btn-primary" type = "submit" 
                     // disabled={!this.validateForm()}
                     >Register</button>
-                    <Link to="/myBookings">
-                                <button className="btn btn-primary"> My Bookings</button>
-                    </Link>
             </div>
         </div>
     </form>
