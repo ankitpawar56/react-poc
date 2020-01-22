@@ -5,7 +5,7 @@ import registerComponent from "./views/Register/Register";
 import BookFlight from "./views/BookFlight/BookFlight"
 import Result from "./Components/Result/Result"
 import MyBookings from "./views/MyBookings/MyBookings"
-//import HomePage from "./views/HomePage";
+import withAuth from './Components/WithAuth/WithAuth';
 
 const MyRoutes = [
     {
@@ -15,32 +15,23 @@ const MyRoutes = [
     {
         path: "/register",
         component: registerComponent
-    },
-    {
-         path: "/book",
-         component: BookFlight
-    },
-    {
-        path: "/result",
-        component: Result
-    },
-    {
-        path: "/myBookings",
-        component: MyBookings
-    },
+    }
 ]
-
 const Routes = () => {
     const MyRoute = MyRoutes.map((curr, i) => (
         <Route key = {i} path = {curr.path} component = {curr.component} />
     ));
+
 
     return (
         <BrowserRouter>
             <Switch>
                 <Redirect exact from = "/" to = "/login" />
                 {MyRoute}
-            </Switch>
+                <Route path="/book" component={withAuth(BookFlight)} />
+                <Route path="/result" component={withAuth(Result)} />
+                <Route path="/myBookings" component={withAuth(MyBookings)} />
+                </Switch>
         </BrowserRouter>
     );
 }

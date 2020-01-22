@@ -19,7 +19,7 @@ const loginReducer = function(state = initialState, {type, data, payload}) {
             const token = payload.data.token
             return {
                 ...state,
-                isLoggedIn,
+                isLoggedIn: true,
                 token
             };
         case LOGIN_FAILURE:
